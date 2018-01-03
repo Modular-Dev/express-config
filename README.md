@@ -70,9 +70,9 @@ const configDir = path.resolve(`${__dirname}/config`)
 const configLoader = new ExpressConfig({
   path: configDir,
   app: express() // a valid express instance,
-  // specify default params (optional)
+  // specify default params
   defaults: {
-    root: process.cwd()
+    root: process.cwd() //(not optional) - must specify app root
   },
   // specify overrides (optional)
   overrides: {

@@ -5,7 +5,13 @@ const debug = require('debug')('express-config');
 
 module.exports = (() => {
 
-  function setViewEngine(_viewEngine, app) {
+  function setViewEngine(config, app) {
+    const viewEngine = config.get('view:engine');
+
+    debug('view::engine:: ', viewEngine);
+
+    const appRoot = config.get('root');
+
     const defaultEngine = 'ejs';
     const viewEngines = {
       'hamljs': '.haml',
@@ -14,18 +20,25 @@ module.exports = (() => {
     let validEngine = defaultEngine;
     let validExtension = viewEngines[defaultEngine];
 
-    if (_viewEngine) {
-      validExtension = viewEngines[_viewEngine];
+    if (viewEngine) {
+      validExtension = viewEngines[viewEngine];
       if (!validExtension) {
         let supportedEngines = Object.keys(viewEngines);
         throw new Error(`Unsupported view engine. Only supported engines are: ${supportedEngines}`)
       }
-      validEngine = _viewEngine
+      validEngine = viewEngine
     }
     // set application accordingly
     app.set('view engine', validExtension);
     app.engine(validExtension, require(validEngine).renderFile);
 
+    // configure view related settings
+    app.set('views', path.resolve(__dirname, appRoot, config.get('view:templateRoot')));
+    app.set('layout', path.resolve(__dirname, appRoot, config.get('view:templateLayouts')));
+
+    if (!config.get('view:cache')) {
+      app.set('view cache', false);
+    }
   }
 
   class AppManager extends BaseManager {
@@ -40,16 +53,9 @@ module.exports = (() => {
       app.set('port', config.get('port'));
       app.set('trust proxy', 1);
       app.set('env', config.get('env') || 'development');
-      app.set('views', path.resolve(__dirname, config.get('root'), config.get('view:templateRoot')));
-      app.set('layout', path.resolve(__dirname, config.get('root'), config.get('view:templateLayouts')));
 
-      debug('view::engine:: ', config.get('view:engine'));
+      setViewEngine(config, app);
 
-      setViewEngine(config.get('view:engine'), app);
-
-      if (!config.get('views:cache')) {
-        app.set('view cache', false);
-      }
     }
 
     static configureDevelopmentEnv(params) {

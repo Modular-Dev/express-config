@@ -3,14 +3,17 @@
   "port": 6001,
   "compressionThreshold": 512,
   "host": "localhost",
-  "staticFolderMount": "/assets",
-  "staticFolders": ["public"],
+  "static": {
+    "folderMount": "/assets",
+    "staticFolders": ["public"]
+  },
   "maxAge": "1d",
   "development": true,
   "env": "development",
   "view": {
     "engine": "ejs",
     "templateRoot": "templates",
-    "templateLayouts": "templates/layouts"
+    "templateLayouts": "templates/layouts",
+    "cache": true
   }
 }
