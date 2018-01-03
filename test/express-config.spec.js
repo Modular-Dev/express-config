@@ -35,10 +35,17 @@ describe('Express Config', function () {
     it('should contain expected config values', function(){
       var expressConfig = new ExpressConfig(this.validParams);
       var settings = expressConfig.config;
-      assert.equal(settings.get('templateLayouts'), "templates/layouts", 'Retrieve template layout setting')
+      assert.equal(settings.get('view:templateLayouts'), "templates/layouts", 'Retrieve template layout setting')
     })
   })
-
+  describe('Specify a view engine', function(){
+    it('should configure the specified view engine', function(){
+      var expressConfig = new ExpressConfig(this.validParams);
+      var settings = expressConfig.config;
+      expressConfig.configure('app');
+      assert.equal(settings.get('view:engine'), 'ejs', 'Template settings specified')
+    })
+  })
   describe('Configure', function(){
     it('should configure an express app from specified configs', function() {
       var expressConfig = new ExpressConfig(this.validParams);

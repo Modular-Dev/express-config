@@ -62,30 +62,79 @@ nsp is a command-line tool that checks the Node Security Project vulnerability d
 
 
 ```js
-var config = {
-    root: process.cwd(),
-    port: 9090,
-    cacheExpiry: 604800000,
-    session: {
-      secret: require('crypto').randomBytes(64).toString('hex'), // default
-      signed: true, //default
-      httpOnly: true, // default
-      secure: true, // default
-      expiration: new Date(Date.now() + 60 * 60 * 1000), // default 1 hour
-      domain: 'localhost' //default
-    },
-    // optional - secure all endpoints via jwt
-    // simply checks if there is a token passed in
-    // then verifies based on shared secret [process.env.JWT_SECRET]
-    jwt: {
-      secureApiWithJwt: true,
-      secureEndpoint: '/api'
+
+const ExpressConfig = require('express-config');
+
+// Configure express app
+const configDir = path.resolve(`${__dirname}/config`)
+const configLoader = new ExpressConfig({
+  path: configDir,
+  app: express() // a valid express instance,
+  // specify default params (optional)
+  defaults: {
+    root: process.cwd()
+  },
+  // specify overrides (optional)
+  overrides: {
+    view: {
+      engine: "silly_made_up_engine",
+      templateRoot: "server/views", //relative to root
+      templateLayouts: "server/views/layouts" //relative to root
     }
-  };
-var app = require('default-express-app')(config);
-NOTE: returns express app
+  },
+})
+
+// file - config/development.json
+{
+  "domain": "http://localhost:3000",
+  "port": 6001,
+  "compressionThreshold": 512,
+  "host": "localhost",
+  "staticFolderMount": "/assets",
+  "staticFolders": ["public"],
+  "maxAge": "1d",
+  "development": true,
+  "env": "development",
+  "view": {
+    "engine": "ejs",
+    "templateRoot": "templates",
+    "templateLayouts": "templates/layouts"
+  }
+}
+
+configLoader.app.get('port');
+//6001
+
+configLoader.config.get();
+
+{ root: '/apps/some/cool/app',
+  domain: 'http://localhost:3000',
+  port: 6001,
+  compressionThreshold: 512,
+  host: 'localhost',
+  staticFolderMount: '/assets',
+  staticFolders: [ 'public' ],
+  maxAge: '1d',
+  development: true,
+  env: 'development'
+}
+
 ```
 
+## Tests
+
+```sh
+Express Config
+    constructor
+      ✓ should throw an error if no config path is provided
+      ✓ should throw an error if no express app instance is provided
+    Config settings
+      ✓ should contain expected config values
+    Specify a view engine
+      ✓ should configure the specified view engine
+    Configure
+      ✓ should configure an express app from specified configs
+```
 
 ## License
 
