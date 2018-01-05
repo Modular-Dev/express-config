@@ -1,7 +1,7 @@
 {
-  "name": "express-config",
+  "name": "hypersonic-express-config",
   "version": "1.0.0",
-  "description": "Default (but overrideable) node expressjs configs",
+  "description": "Default (but overrideable) node expressjs configs used by the hypersonic-express framework",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint lib/**/*.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://Modular-Dev/express-config.git"
+    "url": "https://github.com/hypersonicb2b/hypersonic-express-config.git"
   },
   "keywords": [
     "module",
