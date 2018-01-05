@@ -2,6 +2,7 @@ const _ = require('lodash');
 const path = require('path');
 const BaseManager = require('./base-manager');
 const debug = require('debug')('express-config');
+const expressLayouts = require('express-ejs-layouts');
 
 module.exports = (() => {
 
@@ -31,6 +32,11 @@ module.exports = (() => {
     // set application accordingly
     app.set('view engine', validExtension);
     app.engine(validExtension, require(validEngine).renderFile);
+
+    // support for ejs layouts
+    if (validEngine == defaultEngine) {
+      app.use(expressLayouts);
+    }
 
     // configure view related settings
     app.set('views', path.resolve(__dirname, appRoot, config.get('view:templateRoot')));

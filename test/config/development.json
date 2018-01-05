@@ -13,7 +13,7 @@
   "view": {
     "engine": "ejs",
     "templateRoot": "templates",
-    "templateLayouts": "templates/layouts",
+    "templateLayouts": "templates/layouts/layout",
     "cache": true
   }
 }
