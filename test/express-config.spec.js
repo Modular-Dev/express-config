@@ -14,6 +14,7 @@ var configDir = path.resolve(__dirname + '/config');
 
 var configureApp = function (expressConfig) {
   expressConfig.configure('app');
+  expressConfig.configure('middleware');
   //test routes
   expressConfig.app.get('/test', renderTemplate);
 }
@@ -81,6 +82,19 @@ describe('Express Config', function () {
       .get("/test")
       .expect(200)
       .then ((res) => {
+        server.close();
+      })
+    })
+  })
+
+  describe('Middleware loaded', function(){
+    it('should get diagnostic middleware route', function(){
+      let server = this.expressConfig.app.listen(9898)
+      request(server)
+      .get("/diagnostic")
+      .expect(200)
+      .then ((res) => {
+        assert.equal(res.body.status, 'up', 'status must be returned');
         server.close();
       })
     })
