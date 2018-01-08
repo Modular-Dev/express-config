@@ -7,6 +7,7 @@ const compression = require('compression');
 const crossDomain = require('../lib/middleware/cross-domain');
 const serverStatus = require('../lib/middleware/server-status');
 const noCache = require('../lib/middleware/no-cache');
+const helmet = require('helmet');
 const async = require('async');
 
 function parallel(middlewares) {
@@ -24,6 +25,9 @@ module.exports = (() => {
 
     static configureCommon(params) {
       const { app, config } = params;
+
+      // use Helmet early in the middleware stack so that its headers are sure to be set.
+      app.use(helmet())
 
       const compressionSettings = {
         threshold: config.get('compressionThreshold') || 512
