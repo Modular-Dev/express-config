@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const crossDomain = require('../lib/middleware/cross-domain');
 const serverStatus = require('../lib/middleware/server-status');
+const noCache = require('../lib/middleware/no-cache');
 const async = require('async');
 
 function parallel(middlewares) {
@@ -52,6 +53,8 @@ module.exports = (() => {
 
     static configureDevelopmentEnv(params) {
       const {app} = params;
+      // no cache for dev files
+      app.use(noCache);
     }
   }
 
