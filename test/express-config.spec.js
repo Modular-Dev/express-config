@@ -15,6 +15,7 @@ var configDir = path.resolve(__dirname + '/config');
 var configureApp = function (expressConfig) {
   expressConfig.configure('app');
   expressConfig.configure('middleware');
+  expressConfig.configure('assets');
   //test routes
   expressConfig.app.get('/test', renderTemplate);
 }
