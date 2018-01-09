@@ -8,6 +8,7 @@ const crossDomain = require('../lib/middleware/cross-domain');
 const serverStatus = require('../lib/middleware/server-status');
 const noCache = require('../lib/middleware/no-cache');
 const helmet = require('helmet');
+const errorhandler = require('errorhandler');
 const async = require('async');
 
 function parallel(middlewares) {
@@ -59,6 +60,8 @@ module.exports = (() => {
       const {app} = params;
       // no cache for dev files
       app.use(noCache);
+      // show errors with stack trace
+      app.use(errorhandler({dumpExceptions: true, showStack: true}))
     }
   }
 
