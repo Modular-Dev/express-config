@@ -17,7 +17,7 @@ module.exports = (() => {
     static configureCommon(params) {
       const { app, config } = params;
 
-      const staticFolders = config.get('static:staticFolders')
+      const staticFolders = config.get('static:folders')
       debug('staticFolders:: ', staticFolders)
       debug('app root:: ', config.get('root'))
       const adjustedFolders = configureStaticFolders(staticFolders, config.get('root'))

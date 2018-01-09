@@ -5,7 +5,7 @@
   "host": "localhost",
   "static": {
     "folderMount": "/assets",
-    "staticFolders": ["public"]
+    "folders": ["public"]
   },
   "maxAge": "1d",
   "development": true,
