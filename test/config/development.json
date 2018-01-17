@@ -10,6 +10,9 @@
   "maxAge": "1d",
   "development": true,
   "env": "development",
+  "api": {
+    "mount": "/api"
+  },
   "view": {
     "engine": "ejs",
     "templateRoot": "templates",

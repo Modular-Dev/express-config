@@ -16,6 +16,7 @@ var configureApp = function (expressConfig) {
   expressConfig.configure('app');
   expressConfig.configure('middleware');
   expressConfig.configure('assets');
+  expressConfig.configure('api')
   //test routes
   expressConfig.app.get('/test', renderTemplate);
 }
