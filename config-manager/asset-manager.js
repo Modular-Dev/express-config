@@ -6,7 +6,8 @@ const debug = require('debug')('express-config');
 
 
 function configureStaticFolders(folders, root) {
-  return adjustedFolders = folders.map((folder) => path.resolve(__dirname, root, folder))
+  let adjustedFolders = folders.map((folder) => path.resolve(__dirname, root, folder));
+  return adjustedFolders;
 }
 
 module.exports = (() => {

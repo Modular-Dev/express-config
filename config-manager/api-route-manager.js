@@ -12,7 +12,7 @@ module.exports = (() => {
       let router;
       const customRouter = config.get('api:router');
       const apiEndpoint = config.get('api:mount') || '/api';
-
+      debug('apiEndpoint::', apiEndpoint)
       if(!customRouter) {
         router = express.Router();
       }
