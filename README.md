@@ -6,7 +6,7 @@
 ## Installation
 
 ```sh
-$ npm install --save Modular-Dev/express-app
+$ npm install --save Modular-Dev/express-config
 ```
 ## Methodology
 Uniformity with a focus on security is a good thing. Common settings across the board across all express apps. Period.
